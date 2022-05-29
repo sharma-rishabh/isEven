@@ -1,12 +1,14 @@
+const fs = require('fs');
+
 const ifBlock = (condition, statement) => {
-  return `if(${condition}){${statement};}`
+  return `if(${condition}) {\n${statement};\n\}\n`
 };
 
 const multiIfBlocks = (upperLimit) => {
   let number = 0;
   let ifBlocks = '';
   while (number <= upperLimit) {
-    ifBlocks += ifBlock(`number===${number}`, 'return true');
+    ifBlocks += `\t${ifBlock(`number===${number}`, 'return true')}`;
     number += 2;
   }
   return ifBlocks;
@@ -14,7 +16,13 @@ const multiIfBlocks = (upperLimit) => {
 
 const generateFunctionBlock = (upperLimit) => {
   const ifBlocks = multiIfBlocks(upperLimit);
-  return `const isEven=(number)=>{${ifBlocks}return false;}`
+  return `const isEven=(number) =>{\n\t${ifBlocks}\treturn false;\n}`
 };
 
-console.log(generateFunctionBlock(4));
+const main = (upperLimit) => {
+  const functionBlock = generateFunctionBlock(upperLimit);
+  const fileContent = `${functionBlock}\n\nisEven(${upperLimit})`
+  fs.writeFileSync('./isEven.js', fileContent)
+};
+
+main(process.argv[2]);
