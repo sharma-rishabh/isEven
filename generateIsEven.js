@@ -1,5 +1,5 @@
 const ifBlock = (condition, statement) => {
-  return `if(${condition}){${statement}}`
+  return `if(${condition}){${statement};}`
 };
 
 const multiIfBlocks = (upperLimit) => {
@@ -12,4 +12,9 @@ const multiIfBlocks = (upperLimit) => {
   return ifBlocks;
 };
 
-console.log(multiIfBlocks(4));
+const generateFunctionBlock = (upperLimit) => {
+  const ifBlocks = multiIfBlocks(upperLimit);
+  return `const isEven=(number)=>{${ifBlocks}return false;}`
+};
+
+console.log(generateFunctionBlock(4));
